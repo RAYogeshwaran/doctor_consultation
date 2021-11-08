@@ -1,0 +1,19 @@
+#userDetails h1 {
+    text-align: center;
+    font-size: 2.5vw;
+     font-family: Helvetica, sans-serif;
+}
+#userDetails {
+     
+    margin: 2.5vw 10vw;
+     border: 2px solid black;
+     padding:  2vw;
+     border-radius: 50px;
+     background-color: coral;
+ 
+      
+}
+#userDetails label {
+    margin-left: 30vw;
+    margin-bottom: 1vw;
+}

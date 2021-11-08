@@ -1,0 +1,22 @@
+/* .center {
+     text-align: center;
+     margin: auto;
+     padding: 1vh;
+ }*/
+ input {
+    display: flex;
+    margin: 0 auto;
+    border: 2px solid black;
+    border-radius: 1vw;
+    padding: 0.5vw;
+    margin-bottom: 1.5vw ;
+ }
+ label {
+     margin-left:42vw;
+     margin-bottom: 10vw;
+     margin-top: 10vw;
+     font-size: 1.5vw;
+     font-weight: bold;
+     padding: 1vw;
+     
+ }
