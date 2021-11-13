@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import './Register.css'
 function App() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -22,7 +22,8 @@ function App() {
         console.log(data);
 		if (data.user) {
 			alert('Login successful')
-			window.location.href = '/dashboard'
+			localStorage.setItem('token', data.user)
+			window.location.href = '/dashboard' 
 		} else {
 			alert('Please check your username and password')
 		}
@@ -30,6 +31,10 @@ function App() {
 
 	return (
 		<div>
+		<div  className="heading">
+		<h1>MedicAssist</h1>
+        <h2>"One Place for all your medical needs"</h2>
+		</div>
 			<h1>Login</h1>
 			<form onSubmit={loginUser}>
 				<input
@@ -46,7 +51,7 @@ function App() {
 					placeholder="Password"
 				/>
 				<br />
-				<input type="submit" value="Login" />
+				<input className="submitButton" type="submit" value="Login" />
 			</form>
 		</div>
 	)

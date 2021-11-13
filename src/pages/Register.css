@@ -1,0 +1,45 @@
+* {
+    box-sizing: border-box;
+     
+    margin: 0px;
+    padding: 0px;
+}
+.heading {
+    background-color: black;
+    padding: 2vw 0vw ;
+}
+.heading h1,h2 {
+    color: blanchedalmond;
+    text-align: center;
+}
+h1 {
+    color: black;
+    text-align: center;
+    
+}
+form {
+    text-align: center;
+}
+form input {
+    padding: 1vw;
+    border-radius: 2vw;
+    margin: 2vw;
+    border: solid black 0.2vw;
+    background-color: ivory;
+}
+ 
+.submitButton:hover {
+    background-color: black;
+    color: white;
+ }
+ .submitButton {
+      display: block;
+      margin: 0 auto;
+      font-size: 1.5vw;
+      border-radius: 0.5vw;
+      font-family:  'Arial';
+      font-weight: 300;
+      cursor: pointer;
+      padding: 0.5vw;
+     
+  }

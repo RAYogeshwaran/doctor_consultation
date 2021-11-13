@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+     
+    margin: 0px;
+    padding: 0px;
+}
+.heading {
+    background-color: black;
+    padding: 2vw 0vw ;
+}
+.heading h1,h2 {
+    color: blanchedalmond;
+    text-align: center;
+}
+
+form {
+    text-align: center;
+}
+form input {
+    padding: 1vw;
+    border-radius: 2vw;
+    margin: 2vw;
+    border: solid black 0.2vw;
+    background-color: ivory;
+}
+.submitButton:hover {
+    background-color: black;
+    color: white;
+ }
+ .logoutButton:hover, .pharmacyPart button:hover{
+    background-color: black;
+    color: white;
+ }
+ .submitButton, .logoutButton, .pharmacyPart button {
+      display: block;
+      margin: 0 auto;
+      font-size: 1.2vw;
+      border-radius: 0.5vw;
+      font-family:  'Arial';
+      font-weight: 300;
+      cursor: pointer;
+      padding: 0.5vw;
+     
+  }
+  .logoutButton {
+     margin-left: 95%;
+     background-color: ivory;
+  }
+  p {
+    font-size: 1.2vw;
+    text-align: center;
+  }
+  .pharmacyPart {
+      text-align: center;
+  }
+  .pharmacyPart h1 {
+      margin: 2vw 0;
+      font-family: Arial, Helvetica, sans-serif;
+  }
+  .pharmacyPart input {
+    padding: 1vw;
+    border-radius: 2vw;
+    margin: 2vw;
+    border: solid black 0.2vw;
+    background-color: ivory;
+}
+#pharmacyList  {
+    margin: 1vw 3vw;
+    background-color: mistyrose;
+    color: navy;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover {
+    background-color: #111;
+  }
+  .showStatus {
+      background-color: burlywood;
+      margin: 2vw 8vw;
+      border-radius: 2vw;
+      padding: 2vw 0 ;
+  }
+  .showStatus p {
+      font-size: 1.6vw;
+      margin: 0.5vw;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      margin-left: 40%;
+      text-align: left;
+  }

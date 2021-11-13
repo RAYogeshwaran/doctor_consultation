@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import './Register.css'
 function App() {
 	const navigate = useNavigate()
 
@@ -28,11 +28,19 @@ function App() {
 		if (data.status === 'ok') {
 			navigate('/login')
 		}
+		else if(data.status === 'error') {
+			alert("Email Already Exist!!!")
+		}
 	}
 
 	return (
 		<div>
-			<h1>Register</h1>
+		<div  className="heading">
+		<h1>MedicAssist</h1>
+        <h2>"One Place for all your medical needs"</h2>
+		</div>
+		<h1>Register as new user</h1>
+			
 			<form onSubmit={registerUser}>
 				<input
 					value={name}
@@ -55,7 +63,7 @@ function App() {
 					placeholder="Password"
 				/>
 				<br />
-				<input type="submit" value="Register" />
+				 <input className="submitButton" type="submit" value="Register" /> 
 			</form>
 		</div>
 	)
