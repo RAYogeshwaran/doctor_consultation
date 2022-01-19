@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import './Register.css'
+import { useNavigate } from 'react-router-dom' 
 function App() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const navigate = useNavigate()
 
 	async function loginUser(event) {
 		event.preventDefault()
-
+ try {
 		const response = await fetch('http://localhost:1337/api/login', {
 			method: 'POST',
 			headers: {
@@ -26,7 +28,15 @@ function App() {
 			window.location.href = '/dashboard' 
 		} else {
 			alert('Please check your username and password')
-		}
+		
+	}
+}
+catch(err) {
+	alert("Something Went Wrong");
+}
+	}
+	function navigateRegister () {
+		navigate('/register')
 	}
 
 	return (
@@ -35,6 +45,7 @@ function App() {
 		<h1>MedicAssist</h1>
         <h2>"One Place for all your medical needs"</h2>
 		</div>
+		<div className="pageContent">
 			<h1>Login</h1>
 			<form onSubmit={loginUser}>
 				<input
@@ -52,7 +63,11 @@ function App() {
 				/>
 				<br />
 				<input className="submitButton" type="submit" value="Login" />
+				
 			</form>
+			<br/><br/>
+			<button onClick={navigateRegister} className="navigateRegister">Register</button>
+		</div>
 		</div>
 	)
 }

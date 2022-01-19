@@ -32,13 +32,16 @@ function App() {
 			alert("Email Already Exist!!!")
 		}
 	}
-
+	function navigateLogin () {
+		navigate('/login')
+	}
 	return (
 		<div>
 		<div  className="heading">
 		<h1>MedicAssist</h1>
         <h2>"One Place for all your medical needs"</h2>
 		</div>
+		<div className="pageContent">
 		<h1>Register as new user</h1>
 			
 			<form onSubmit={registerUser}>
@@ -65,6 +68,9 @@ function App() {
 				<br />
 				 <input className="submitButton" type="submit" value="Register" /> 
 			</form>
+			<br/><br/>
+			<button onClick={navigateLogin} className="navigateLogin">Login</button>
+		</div>
 		</div>
 	)
 }

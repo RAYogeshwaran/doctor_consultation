@@ -20,6 +20,11 @@ function App() {
     const [pharmacyadd2, setpharmacyadd2] = useState('')
     const [pharmacyadd3, setpharmacyadd3] = useState('')
     const [pharmacyadd4, setpharmacyadd4] = useState('')
+    const [medicineName, setMedicineName] = useState('')
+    const [medicineStartDate, setMedicineStartDate] = useState('')
+    const [medicineEndDate, setMedicineEndDate] = useState('')
+    const [medicineTime, setMedicineTime] = useState('')
+
    // const [addpharmacy, setpharmacy] = useState('')
     // add a try and catch here
     useEffect(() => {
@@ -41,7 +46,7 @@ function App() {
     }, [])
     async function submitUserData(event) {
         event.preventDefault()// prevent sending the data of form to some other link
-
+       try {
         const response = await fetch('http://localhost:1337/api/dashboard', {
 			method: 'POST',
 			headers: {
@@ -64,6 +69,10 @@ function App() {
           alert("Booking Unsuccessful!!!")
         }
     }
+    catch(err) {
+      alert("Something Went Wrong!!")
+    }
+  }
     // code for accessing pharmacy
     const getPharmacy = async () =>  {
       let url = 'https://api.foursquare.com/v2/venues/search?near=';
@@ -100,11 +109,47 @@ function App() {
     localStorage.removeItem('token')
           navigate('/login')    
   }
+
+  async function sendMedicineTrackingData(event) {
+    try {
+    const response = await fetch('http://localhost:1337/api/tracker', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+        'x-access-token': localStorage.getItem('token'),
+			},
+			body: JSON.stringify({
+				medicineName,
+				medicineStartDate,
+				medicineEndDate,
+        medicineTime,
+        medicineStatus : 0
+			}),
+		})
+
+    const data = await response.json()
+        if(data.status === 'ok') {
+          console.log("Data sent successfully")
+          alert("Data sent successfully");
+        }
+        else {
+          console.log("Unsuccessful !!! ")
+        }
+
+  }
+  catch(err) {
+    alert("Something Went Wrong!!")
+  }
+}
+
+
   async function showStatus(event) {
     event.preventDefault() 
     document.getElementsByClassName("pharmacyPart")[0].style.display = "none";
     document.getElementsByClassName("bookApointment")[0].style.display = "none";
     document.getElementsByClassName("showStatus")[0].style.display = "block";
+    document.getElementsByClassName("medicineTracker")[0].style.display = "none";
+    try {
     const req = await fetch('http://localhost:1337/api/dashboard', {
 			headers: {
 				'x-access-token': localStorage.getItem('token'),
@@ -116,25 +161,78 @@ function App() {
       console.log(data)
 			sethospital(data.hospital)
       setdoctor(data.doctor)
-      settimeSlot(data.timeSlot)
-      setdate(data.date)
+      if(data.timeSlot == 'slot1'){
+      settimeSlot("9:00 AM to 11:00 AM")
+      } else if (data.timeSlot == 'slot2') {
+        settimeSlot("11:00 AM to 1:00 PM")
+      }
+      else if (data.timeSlot == 'slot3') {
+        settimeSlot("4:00 PM to 6:00 PM")
+      }
+      else if (data.timeSlot == 'slot4') {
+        settimeSlot("7:00 PM to 9:00 PM")
+      }
+      else {
+        settimeSlot(" ")
+      }
+      setdate(data.date.slice(0,10))
       setToken(data.token)
-		} else {
-			alert(data.error)
+		} else if(data.status === 'no') {
+       
 		}
+    }
+    catch(err) {
+      alert("Something Went Wrong");
+    }
+   
+  }
+  async function updateMedicineStatus() {
+    try {
+    const response = await fetch('http://localhost:1337/api/tracker', {
+      method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+        'x-access-token': localStorage.getItem('token'),
+			},
+      body: JSON.stringify({
+				 medicineStatus : 1
+			}),
+		})
+    const data = await response.json()
+        if(data.status === 'ok') {
+          console.log("Medicine Status updated")
+          alert("Status Updated");
+        }
+        else {
+          console.log("Unsuccessful !!! ")
+        }
+      }
+      catch(err) {
+        alert("Something Went Wrong!!")
+      }
+
   }
   function showBooking(event){
     event.preventDefault()
     document.getElementsByClassName("showStatus")[0].style.display = "none";
     document.getElementsByClassName("pharmacyPart")[0].style.display = "none";
     document.getElementsByClassName("bookApointment")[0].style.display = "block";
+    document.getElementsByClassName("medicineTracker")[0].style.display = "none";
+
   }
   function showPharmacy(event){
     event.preventDefault()
     document.getElementsByClassName("showStatus")[0].style.display = "none";
     document.getElementsByClassName("bookApointment")[0].style.display = "none";
     document.getElementsByClassName("pharmacyPart")[0].style.display = "block";
-
+    document.getElementsByClassName("medicineTracker")[0].style.display = "none";
+  }
+  function showTracking(event){
+    event.preventDefault()
+    document.getElementsByClassName("showStatus")[0].style.display = "none";
+    document.getElementsByClassName("bookApointment")[0].style.display = "none";
+    document.getElementsByClassName("pharmacyPart")[0].style.display = "none";
+    document.getElementsByClassName("medicineTracker")[0].style.display = "block";
   }
 	return (
     <div>
@@ -147,23 +245,32 @@ function App() {
   <li><a href="" onClick={showStatus} onLoad={showStatus}>Home</a></li>
   <li><a href="" onClick={showBooking}>Booking</a></li>
   <li><a href="" onClick={showPharmacy}>Medicine</a></li>
+  <li><a href="" onClick={showTracking}>Medicine Tracker</a></li>
   <li style={{float:"right"}}><a href="" onClick={handleLogout}>Logout</a></li>
 </ul>
     </div>
-           
+           <div className="pageContent">
           <h1>Welcome to Dashboard</h1>
           <div className="bookApointment">
+          <h1>Book your Appointment</h1>
           <form onSubmit={submitUserData}>
               <input list="hospitalName" onChange={(e) => sethospital(e.target.value)} name="hospitalName" placeholder="choose hospital" required /> 
               <datalist id="hospitalName">
                 <option value="AIIMS"></option>
                 <option value="CMC"></option>
               </datalist> 
-              <input list="doctorName" onChange={(e) => setdoctor(e.target.value)} name="doctorName" placeholder="choose doctor" required/> 
-              <datalist id="doctorName">
-                <option value="Arun Gupta"></option>
-                <option value="Asha Rai"></option>
-              </datalist>
+              <select name="doctorName" onChange={(e) => setdoctor(e.target.value)} required >
+              <option value="" readonly="true" hidden="true" selected>Choose Doctor</option>
+               <optgroup label="Cardiologist">
+                <option value="Arun Gupta">Arun Gupta</option>
+              </optgroup>
+              <optgroup label="Gynaecologist">
+                <option value="Asha Rai">Asha Rai</option>
+              </optgroup>
+              <optgroup label="Diabetologist">
+                <option value="V Mohan">V Mohan</option>
+              </optgroup>
+              </select>
             
             <input list="timeSlot" name="timeSlot" onChange={(e) => settimeSlot(e.target.value)} placeholder="choose time slot" required /> 
             <datalist id="timeSlot">
@@ -173,7 +280,7 @@ function App() {
                 <option value="slot4">7:00 PM to 9:00 PM</option>
                 </datalist>   
           
-             <input name="date" onChange={(e) => setdate(e.target.value)} type="date" placeholder="Date" max="2021-11-15" min="2021-11-14" required /> 
+             <input name="date" onChange={(e) => setdate(e.target.value)} type="date" placeholder="Date" max="2021-12-05" min="2021-12-02" required /> 
              <input className="submitButton" type="submit" value="Submit" required/> 
              
           </form>
@@ -195,6 +302,20 @@ function App() {
           <p>Appointment Date : {date}</p> 
           <p>Consultation timing : {timeSlot}</p>
           <p>Token Number : {token}</p>
+        </div>
+        <div className="medicineTracker">
+        <h1>Track your medicine </h1>
+          <input onChange={(e) => setMedicineName(e.target.value)} placeholder="Medicine Name " type="text" required />
+          <input onChange={(e) => setMedicineStartDate(e.target.value)} placeholder="Course Start Date " type="date" required />
+          <input onChange={(e) => setMedicineEndDate(e.target.value)} placeholder="Course End Date " type="date" required />
+          <input onChange={(e) => setMedicineTime(e.target.value)} placeholder="Time" type="time" required />
+          <button onClick={sendMedicineTrackingData}>Submit</button>
+          <div className="medicineStatus">
+          <br/><br/>
+          <p>I have taken today's medicine</p>
+          <button onClick={updateMedicineStatus}>Confirm</button>
+          </div>
+        </div>
         </div>
         </div>
         );
