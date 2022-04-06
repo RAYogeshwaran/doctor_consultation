@@ -47,7 +47,7 @@ function App() {
     async function submitUserData(event) {
         event.preventDefault()// prevent sending the data of form to some other link
        try {
-        const response = await fetch('http://localhost:1337/api/dashboard', {
+        const response = await fetch('https://medic-assistance.herokuapp.com/api/dashboard', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ function App() {
 
   async function sendMedicineTrackingData(event) {
     try {
-    const response = await fetch('http://localhost:1337/api/tracker', {
+    const response = await fetch('https://medic-assistance.herokuapp.com/api/tracker', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ function App() {
     document.getElementsByClassName("showStatus")[0].style.display = "block";
     document.getElementsByClassName("medicineTracker")[0].style.display = "none";
     try {
-    const req = await fetch('http://localhost:1337/api/dashboard', {
+    const req = await fetch('https://medic-assistance.herokuapp.com/api/dashboard', {
 			headers: {
 				'x-access-token': localStorage.getItem('token'),
 			},
@@ -188,7 +188,7 @@ function App() {
   }
   async function updateMedicineStatus() {
     try {
-    const response = await fetch('http://localhost:1337/api/tracker', {
+    const response = await fetch('https://medic-assistance.herokuapp.com/api/tracker', {
       method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -280,7 +280,7 @@ function App() {
                 <option value="slot4">7:00 PM to 9:00 PM</option>
                 </datalist>   
           
-             <input name="date" onChange={(e) => setdate(e.target.value)} type="date" placeholder="Date" max="2021-12-05" min="2021-12-02" required /> 
+             <input name="date" onChange={(e) => setdate(e.target.value)} type="date" placeholder="Date" max="2022-05-05" min="2022-04-05" required /> 
              <input className="submitButton" type="submit" value="Submit" required/> 
              
           </form>
