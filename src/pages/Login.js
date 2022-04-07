@@ -33,6 +33,7 @@ function App() {
 }
 catch(err) {
 	alert("Something Went Wrong");
+	console.log(err);
 }
 	}
 	function navigateRegister () {
